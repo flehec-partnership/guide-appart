@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide de l'appartement — 44 rue de Callelongue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #14332f;
+    --deep: #0f2e37;
+    --teal: #175c56;
+    --teal-light: #e6efec;
+    --lime-wash: #faf6ee;
+    --saffron: #e8a23d;
+    --saffron-deep: #c97f1f;
+    --line: #d9d0bd;
+    --card: #ffffff;
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--lime-wash);
+    color:var(--ink);
+    font-family:'Public Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  code, .mono{
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  /* Hero */
+  .hero{
+    position:relative;
+    background:linear-gradient(160deg, var(--deep) 0%, var(--teal) 100%);
+    color:#f4efe1;
+    padding:56px 20px 84px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle at 18% 30%, rgba(232,162,61,0.18), transparent 40%),
+      radial-gradient(circle at 82% 70%, rgba(232,162,61,0.12), transparent 45%);
+    pointer-events:none;
+  }
+  .hero-photo{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+  .hero-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0.62;
+  }
+  .hero-photo::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(160deg, rgba(15,46,55,0.62) 0%, rgba(23,92,86,0.42) 100%);
+  }
+  .hero > *:not(.hero-photo){position:relative; z-index:1;}
+  .hero-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--saffron);
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--saffron);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(30px,7vw,44px);
+    font-weight:600;
+    max-width:14ch;
+  }
+  .hero p{
+    max-width:46ch;
+    font-size:15.5px;
+    color:#d9e6e0;
+    margin-top:14px;
+  }
+  .hero-address{
+    margin-top:26px;
+    display:inline-flex;
+    flex-direction:column;
+    gap:2px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(244,239,225,0.25);
+    padding:14px 18px;
+    border-radius:14px;
+    font-size:14px;
+    text-decoration:none;
+    color:inherit;
+    transition:background .15s, border-color .15s;
+  }
+  .hero-address:hover{
+    background:rgba(255,255,255,0.14);
+    border-color:rgba(244,239,225,0.45);
+  }
+  .hero-address strong{font-family:'JetBrains Mono',monospace; font-size:15px; color:#fff;}
+
+  /* Route strip — wayfinding signature: a dotted trail linking every stop */
+  .route-nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(250,246,238,0.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:10px 12px;
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    margin-top:-40px;
+  }
+  .route-nav::-webkit-scrollbar{display:none;}
+  .route-pill{
+    flex:0 0 auto;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    padding:7px 13px;
+    border-radius:999px;
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--teal);
+    text-decoration:none;
+    white-space:nowrap;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .route-pill:hover, .route-pill.active{
+    background:var(--teal);
+    border-color:var(--teal);
+    color:#fff;
+  }
+
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:28px 16px 60px;
+  }
+
+  .section{
+    position:relative;
+    margin-bottom:16px;
+    scroll-margin-top:64px;
+  }
+  /* dotted trail connecting sections, like a route on a map */
+  .section::before{
+    content:"";
+    position:absolute;
+    left:19px;
+    top:52px;
+    bottom:-16px;
+    width:0;
+    border-left:2px dotted var(--line);
+  }
+  .section:last-child::before{display:none;}
+
+  .section-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    cursor:pointer;
+    padding:6px 0;
+  }
+  .section-marker{
+    flex:0 0 auto;
+    width:40px;height:40px;
+    border-radius:50%;
+    background:var(--card);
+    border:2px solid var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;
+    z-index:1;
+  }
+  .section-title{
+    font-size:17.5px;
+    font-weight:600;
+    flex:1;
+  }
+  .section-sub{
+    font-size:12.5px;
+    color:#6b7d78;
+    font-family:'JetBrains Mono',monospace;
+    display:block;
+    margin-top:1px;
+  }
+  .chevron{
+    font-size:13px;
+    color:var(--teal);
+    transition:transform .2s ease;
+    flex:0 0 auto;
+  }
+  .section.open .chevron{transform:rotate(90deg);}
+
+  .section-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+    margin-left:52px;
+  }
+  .section.open .section-body{max-height:2400px;}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    margin:6px 0 14px;
+  }
+  .card h4{
+    font-family:'Public Sans',sans-serif;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin:0 0 8px;
+  }
+  .card p, .card li{
+    font-size:14.5px;
+    color:#2c3e3a;
+  }
+  .card ul{margin:4px 0; padding-left:18px;}
+  .card p{margin:0 0 8px;}
+  .card p:last-child{margin-bottom:0;}
+  .card + .card{margin-top:0;}
+
+  .badge{
+    display:inline-block;
+    background:var(--teal-light);
+    color:var(--teal);
+    font-size:11.5px;
+    font-weight:600;
+    padding:3px 9px;
+    border-radius:7px;
+    margin-bottom:6px;
+  }
+  .badge.warn{
+    background:#fbe9d3;
+    color:var(--saffron-deep);
+  }
+  .code-box{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--deep);
+    color:#f4efe1;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13.5px;
+    padding:8px 12px;
+    border-radius:9px;
+    margin:4px 6px 4px 0;
+  }
+  .note{
+    font-size:13px;
+    color:var(--saffron-deep);
+    background:#fff8ec;
+    border:1px solid #f1d9a8;
+    border-radius:10px;
+    padding:10px 12px;
+    margin-top:8px;
+  }
+  .note strong{color:var(--saffron-deep);}
+
+  footer{
+    text-align:center;
+    font-size:12.5px;
+    color:#7c8d88;
+    padding:30px 20px 50px;
+  }
+
+  @media (min-width:520px){
+    .hero{padding:64px 40px 90px;}
+    main{padding:32px 24px 70px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1608037580875-df901b196878?fm=jpg&q=80&w=1600&auto=format&fit=crop" alt="Calanques près de Marseille" loading="lazy">
+  </div>
+  <div class="hero-eyebrow">Guide de séjour</div>
+  <h1>Bienvenue dans l'appart du frangin</h1>
+  <p>Tout ce qu'il faut savoir pour s'installer tranquillement pendant trois semaines — pièce par pièce, comme si je te faisais visiter.</p>
+  <a class="hero-address" href="https://www.google.com/maps/search/?api=1&query=44+rue+de+Callelongue+Marseille" target="_blank" rel="noopener">
+    <span>44 rue de Callelongue ↗</span>
+    <strong>Bâtiment 4 · Étage 7 · Appt 4705</strong>
+  </a>
+</div>
+
+<nav class="route-nav" id="routeNav">
+  <a class="route-pill" href="#acces">🔑 Accès</a>
+  <a class="route-pill" href="#salon">🛋️ Salon</a>
+  <a class="route-pill" href="#chambre">🛏️ Chambre</a>
+  <a class="route-pill" href="#sdb">🚿 SdB</a>
+  <a class="route-pill" href="#cuisine">🍳 Cuisine</a>
+  <a class="route-pill" href="#menage">🧹 Ménage</a>
+  <a class="route-pill" href="#plantes">🌿 Plantes & chat</a>
+  <a class="route-pill" href="#dechets">🗑️ Déchets</a>
+  <a class="route-pill" href="#wifi">📶 Wifi</a>
+  <a class="route-pill" href="#alentours">🚌 Alentours</a>
+  <a class="route-pill" href="#depart">🔒 En partant</a>
+</nav>
+
+<main>
+
+  <!-- ACCÈS -->
+  <section class="section open" id="acces">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🔑</div>
+      <div class="section-title">Accès & codes<span class="section-sub">badge · digicodes · trajet</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Entrer dans la résidence</h4>
+        <p>Badge les clés sur le lecteur à l'entrée principale. Tu traverses le hall (boîtes aux lettres), tu ressors de l'autre côté.</p>
+      </div>
+      <div class="card">
+        <h4>Trouver le bâtiment 4</h4>
+        <p>Pars à droite en sortant du hall, puis descends à gauche. Continue tout droit et prends la <strong>2ᵉ à gauche</strong> (pas la première). Le bâtiment 4 est juste après, sur ta droite — imagine 6 bâtiments alignés en 2 rangées de 3 ; c'est celui du milieu, rangée du bas. Des panneaux indiquent maintenant le chemin.</p>
+      </div>
+      <div class="card">
+        <h4>Monter jusqu'au 7ᵉ</h4>
+        <p>Badge à nouveau pour le hall du bâtiment. À l'intérieur, prends la porte de gauche (celle du milieu descend au sous-sol, ce n'est pas la bonne). Tu arrives à l'ascenseur : badge pour l'appeler, puis appuie sur <strong>7</strong>.</p>
+        <p>En sortant de l'ascenseur, tourne à droite : c'est l'appartement de droite, le <strong>4705</strong>.</p>
+      </div>
+      <div class="card">
+        <h4>Codes (si pas de badge)</h4>
+        <p>Appuyer sur le symbole clé, taper le code, puis appuyer sur la touche entrée.</p>
+        <span class="code-box">🔑 Entrée principale → 02024 → entrée</span>
+        <span class="code-box">🔑 Bâtiment 4 → 01208 → entrée</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SALON -->
+  <section class="section" id="salon">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🛋️</div>
+      <div class="section-title">Salon<span class="section-sub">TV · bureau · volets · balcon</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Télévision</h4>
+        <p>Le bouton rouge en haut de la télécommande allume la TV. Un appui bref = mise en veille (écran d'accueil avec une photo). Appui long = extinction complète. Trois apps dispo : <strong>YouTube</strong> (mon compte), <strong>Netflix</strong> (compte de ma copine), <strong>Prime Vidéo</strong> (mon compte).</p>
+      </div>
+      <div class="card">
+        <h4>Bureau</h4>
+        <p>Toujours poser les objets chauds sur les <strong>dessous de verre en cuir</strong>, jamais directement sur le sous-main (cuir fragile).</p>
+      </div>
+      <div class="card">
+        <h4>Volets</h4>
+        <p>Boîtier tactile près de l'entrée, identique à celui de la chambre : haut = ouvrir, bas = fermer, milieu = stop.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAMBRE -->
+  <section class="section" id="chambre">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🛏️</div>
+      <div class="section-title">Chambre<span class="section-sub">clim · ventilo · volets</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Ventilateur</h4>
+        <p>Prise cachée derrière le meuble en bois — vérifier qu'il est bien branché. Un seul bouton play pour démarrer, molette pour la puissance.</p>
+      </div>
+      <div class="card">
+        <h4>Clim portative — mode d'emploi complet</h4>
+        <p><span class="badge">Allumage</span> Bouton play tout à gauche. Flèches à droite pour baisser jusqu'à 18°C (elle n'atteindra jamais cette température).</p>
+        <p><span class="badge">Évacuation</span> Un tuyau relie la clim à une planche en bois qui se glisse dans la porte vitrée à côté du lit, pour évacuer l'air chaud dehors. Comme la porte ne ferme jamais complètement, un peu d'air chaud rentre.</p>
+        <p><span class="badge">Astuce nuit</span> Descendre les volets limite l'entrée d'air chaud. Si le bruit gêne la nuit, éteindre la clim, rentrer la planche, refermer la porte vitrée, puis brancher le ventilateur (une seule prise dispo pour les deux — il faut alterner).</p>
+        <div class="note"><strong>Volets qui bloquent :</strong> un seul appui sur "fermer" (bouton du bas) suffit à lancer la fermeture — pas besoin de rester appuyé. Ils se rouvrent automatiquement s'ils détectent un obstacle en position quasi-fermée : surveiller, et dès que le volet est presque clos, appuyer sur le bouton du milieu (stop) pour éviter qu'il ne se rouvre.</div>
+      </div>
+      <div class="card">
+        <h4>Divers</h4>
+        <p>Draps propres installés. Port USB disponible sur la table de chevet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SALLE DE BAIN -->
+  <section class="section" id="sdb">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🚿</div>
+      <div class="section-title">Salle de bain<span class="section-sub">serviettes · douche · PQ</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Serviettes</h4>
+        <p>Meuble blanc IKEA à côté des WC (près du panier à linge) : premier tiroir en haut.</p>
+      </div>
+      <div class="card">
+        <h4>Douche</h4>
+        <p>Gel douche et shampoing en libre usage. Passer la raclette sur la paroi vitrée après usage.</p>
+      </div>
+      <div class="card">
+        <h4>Papier toilette</h4>
+        <p>Réserve sous l'évier, dans les paniers en osier.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUISINE -->
+  <section class="section" id="cuisine">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🍳</div>
+      <div class="section-title">Cuisine<span class="section-sub">placards · électroménager · congélateur</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>À grignoter</h4>
+        <p>Placard au-dessus de l'évier : thé, café en poudre, miel, pâte à tartiner, chocolat en poudre, céréales, pâtes, riz. Sers-toi librement en attendant de faire tes courses.</p>
+      </div>
+      <div class="card">
+        <h4>Frigo</h4>
+        <p>Un jus d'orange et une béchamel à terminer en priorité (elle ne se conservera plus longtemps) — et tout ce qui traîne encore, sers-toi.</p>
+      </div>
+      <div class="card">
+        <span class="badge warn">Important</span>
+        <h4>Congélateur qui ferme mal</h4>
+        <p>Le givre empêche la porte de bien fermer, elle peut se rouvrir toute seule. Un panier en osier est calé devant pour la maintenir. Après avoir pris ou rangé quelque chose au congélo, <strong>penser à bien replacer le panier devant la porte</strong>, sinon le frigo surchauffe et tout peut décongeler.</p>
+      </div>
+      <div class="card">
+        <h4>Lave-vaisselle</h4>
+        <p>Tablettes dans un petit bac sous l'évier. Une tablette dans le grand compartiment dédié, refermer, sélectionner le mode <strong>Éco</strong> (premier bouton), puis play. Une fois fini, remettre sur off.</p>
+      </div>
+      <div class="card">
+        <h4>Air fryer</h4>
+        <p>Toujours glisser une feuille de papier cuisson dedans (réserve au-dessus du micro-ondes) pour éviter que ça salisse. Le poser bien avancé sur le plan de travail, pas collé au mur — l'évacuation d'air chaud est à l'arrière et un moteur qui chauffe contre le mur peut griller.</p>
+        <p>Réglages tactiles : bien fermer la poignée, play pour démarrer. Une pression sur la molette du bas = mode manuel (180°C par défaut), valider à nouveau = 15 min par défaut, encore une pression pour lancer. Le bouton tactile en haut arrête l'appareil.</p>
+      </div>
+      <div class="card">
+        <h4>Lave-linge</h4>
+        <p>Bac à gauche = lessive, bac du milieu = adoucissant (petit contenant bleu). Mode délicat conseillé, 30 à 40°C, essorage 800–1200. Bouton play tactile tout à droite pour lancer.</p>
+        <p>Étendoir à linge rangé à côté du canapé — utilisable dedans ou dehors (le sortir <strong>plié</strong> avant de franchir la porte vitrée, sinon il ne passe pas). Bac à linge sale au-dessus du frigo.</p>
+      </div>
+      <div class="card">
+        <h4>Plaques & hotte</h4>
+        <p>Bouton de gauche pour la lumière de la hotte, bouton de droite pour l'aspiration — le niveau 1 suffit généralement. Poêles et casseroles rangées dans le tiroir au-dessus du micro-ondes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENAGE -->
+  <section class="section" id="menage">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🧹</div>
+      <div class="section-title">Ménage<span class="section-sub">aspirateurs</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Aspirateur robot</h4>
+        <p>Près de la TV, normalement piloté depuis mon téléphone — mais un simple appui sur le bouton allumage peut suffire à le lancer. À tenter, sans garantie qu'il passe aussi la serpillière.</p>
+      </div>
+      <div class="card">
+        <h4>Aspirateur à main</h4>
+        <p>Dans le placard de l'entrée, sans fil. Niveau de charge non garanti.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANTES ET CHAT -->
+  <section class="section" id="plantes">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🌿</div>
+      <div class="section-title">Plantes & le chat du voisin<span class="section-sub">arrosage · visites félines</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Les deux plantes d'intérieur</h4>
+        <p>Des petits diffuseurs Jardigel assurent l'arrosage de base pendant un mois — vérifier juste une fois par semaine. Arrosoir au-dessus du frigo (ou un grand verre d'eau) : environ <strong>2 verres par plante, une fois par semaine</strong>, sans noyer.</p>
+      </div>
+      <div class="card">
+        <h4>Un visiteur régulier</h4>
+        <p>Un chat du voisin passe souvent ses journées à la maison, juste pour la compagnie — il ne boit quasiment jamais. Pas de nourriture. Il est câlin, tu peux le laisser entrer, mais penser à le faire sortir avant de partir (il repart aussi souvent tout seul par le passage du tuyau de clim, côté chambre).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECHETS -->
+  <section class="section" id="dechets">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🗑️</div>
+      <div class="section-title">Déchets & tri<span class="section-sub">local poubelle · verre</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Sacs poubelle</h4>
+        <p>Rangés sous l'évier. Pour descendre : ascenseur (badge) jusqu'au <strong>sous-sol (-1)</strong>, à droite en sortant, traverser une double porte, puis à gauche jusqu'au local poubelle.</p>
+        <p><strong>Poubelles noires</strong> = ordures classiques · <strong>poubelles jaunes</strong> = tri carton/plastique.</p>
+      </div>
+      <div class="card">
+        <h4>Verre</h4>
+        <p>Se jette dehors, dans la rue : longer le bâtiment au-delà des boîtes aux lettres, trottoir de gauche, en face de la <strong>MATMUT</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WIFI -->
+  <section class="section" id="wifi">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">📶</div>
+      <div class="section-title">Wifi<span class="section-sub">réseau · mot de passe</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Réseau</h4>
+        <p>Le nom du réseau se termine par <span class="code-box">…93E2</span></p>
+        <p>Mot de passe : <span class="code-box">1Eg5peCVUVHgCwpyNp</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALENTOURS -->
+  <section class="section" id="alentours">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🚌</div>
+      <div class="section-title">Dans le quartier<span class="section-sub">bus · courses · balade</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Se déplacer</h4>
+        <p>Visiophone à l'entrée de la résidence pour les visiteurs. Pour le bus, direction l'arrêt <strong>Sainte-Anne</strong> (via Google Maps), puis <strong>bus n°23</strong> : il dessert le Prado et le supermarché Carrefour Bonneveine (le plus grand du coin).</p>
+      </div>
+      <div class="card">
+        <h4>Manger & se balader</h4>
+        <p>Peu de commerces à moins de 10 minutes à pied — ne pas hésiter à marcher un peu. Chercher les boulangeries sur Google Maps. Pour une balade, le <strong>parc Borély</strong> est tout proche.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPART -->
+  <section class="section" id="depart">
+    <div class="section-head" onclick="toggle(this)">
+      <div class="section-marker">🔒</div>
+      <div class="section-title">En partant<span class="section-sub">clim · aération · clés</span></div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="section-body">
+      <div class="card">
+        <h4>Réflexes du quotidien</h4>
+        <p>Ne jamais aérer avec la clim allumée. Éteindre la clim en sortant (consommation) et la rallumer au retour.</p>
+      </div>
+      <div class="card">
+        <span class="badge warn">Au départ final</span>
+        <h4>Rendre les clés</h4>
+        <p>Bien fermer la porte à clé. Descendre au rez-de-chaussée (le badge n'est pas nécessaire pour descendre), traverser le hall d'entrée jusqu'aux boîtes aux lettres — ton nom de famille est indiqué sur la 2ᵉ rangée.</p>
+        <div class="note">Par sécurité, ne jamais laisser les clés nues dans la boîte : les glisser dans une <strong>enveloppe fermée</strong> nominative (préparée à l'avance sur le meuble de l'entrée), pour éviter qu'un livreur qui ouvre toutes les boîtes d'un coup ne les repère et les prenne.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Fait avec soin pour que ton séjour se passe bien 🌊</footer>
+
+<script>
+  function toggle(header){
+    const section = header.parentElement;
+    const wasOpen = section.classList.contains('open');
+    document.querySelectorAll('.section.open').forEach(s => s.classList.remove('open'));
+    if(!wasOpen) section.classList.add('open');
+  }
+
+  // Highlight nav pill on scroll
+  const sections = document.querySelectorAll('.section');
+  const pills = document.querySelectorAll('.route-pill');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        pills.forEach(p=>p.classList.toggle('active', p.getAttribute('href') === '#'+id));
+      }
+    });
+  }, {rootMargin: '-20% 0px -70% 0px'});
+  sections.forEach(s=>observer.observe(s));
+
+  pills.forEach(p=>{
+    p.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const target = document.querySelector(p.getAttribute('href'));
+      target.classList.add('open');
+      target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+</script>
+
+</body>
+</html>
